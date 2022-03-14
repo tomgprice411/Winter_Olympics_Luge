@@ -14,8 +14,17 @@ app = dash.Dash(__name__, external_stylesheets = external_stylesheets,
 
 server = app.server
 
-
-
-
-
+nav = html.Div([
+    dbc.Row([
+        dbc.Col(html.Div(), className = "col-3"),
+        dbc.Col(html.H1("Test Dashboard"), className = "col-6"),
+        dbc.Col(html.Div(), className = "col-3")
+    ]),
+    dbc.Row([
+        dbc.Col(html.Div(), className = "col-3"),
+        dbc.Col(html.P(html.A("Overview", href="/overview")), className = "col-3"),
+        dbc.Col(html.P(html.A("Athelete Improvement", href="/athlete")), className = "col-3"),
+        dbc.Col(html.Div(), className = "col-3")
+    ])
+])
 
