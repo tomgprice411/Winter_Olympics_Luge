@@ -28,3 +28,13 @@ nav = html.Div([
     ])
 ])
 
+
+
+app.layout = html.Div([
+    dcc.Location(id = "url", refresh = False),
+    nav,
+    html.Div(id = "page-content")
+])
+
+
+
