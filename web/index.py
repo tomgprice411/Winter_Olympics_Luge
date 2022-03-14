@@ -37,4 +37,15 @@ app.layout = html.Div([
 ])
 
 
+@app.callback(Output("page-content", "children"),
+                Input("url", "pathname"))
+def create_page_content(pathname):
+    if pathname == "/overview":
+        return overview.layout
+    elif pathname == "/athlete":
+        return athlete.layout
+    else:
+        return overview.layout
+
+
 
