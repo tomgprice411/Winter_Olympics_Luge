@@ -47,5 +47,8 @@ def create_page_content(pathname):
     else:
         return overview.layout
 
-
+if __name__ == "__main__":
+    app.run_server(host = "0.0.0.0",
+                    port = 5000,
+                    debug = False)
 
