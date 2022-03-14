@@ -24,6 +24,33 @@ df_2018_m_t = df_2018_m.melt(id_vars = ["Name", "Gender"], value_vars = ["Start"
 df_2018_f_t = df_2018_f.melt(id_vars = ["Name", "Gender"], value_vars = ["Start", "Interval 1", "Interval 2", "Interval 3", "Finish"],
             var_name = "Interval", value_name = "Time (s)")
 
+[{"label": value.title(), "value": value} for value in df_2018_f_t["Name"].unique()]
+
+
+
+layout = dbc.Container([
+    dbc.Row([
+        dbc.Col()
+    ]),
+    dbc.Row([
+        dbc.Col(dcc.Dropdown(id = "female-dropdown",
+                                options =[{"label": value.title(), "value": value} for value in df_2018_f_t["Name"].unique()],
+                                value="GOUGH Alex"))
+    ]),
+    dbc.Row([
+        dbc.Col(dcc.Graph(id = "female-graph"))
+    ]),
+    dbc.Row([
+        dbc.Col(dcc.Dropdown(id = "male-dropdown",
+                                options = [{"label": value.title(), "value": value} for value in df_2018_m_t["Name"].unique()],
+                                value="LOCH Felix"))
+    ]),
+    dbc.Row([
+        dbc.Col(dcc.Graph(id = "male-graph"))
+    ]),
+])
+
+
 
 
 fig = go.Figure()
