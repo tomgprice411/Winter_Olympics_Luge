@@ -4,6 +4,7 @@ from dash import html as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
 
+from apps import overview, athlete
 
 external_stylesheets = ["assets/1bootstrap.css", "assets/2style.css"]
 
@@ -23,7 +24,7 @@ nav = html.Div([
     dbc.Row([
         dbc.Col(html.Div(), className = "col-3"),
         dbc.Col(html.P(html.A("Overview", href="/overview")), className = "col-3"),
-        dbc.Col(html.P(html.A("Athelete Improvement", href="/athlete")), className = "col-3"),
+        dbc.Col(html.P(html.A("Athlete Improvement", href="/athlete")), className = "col-3"),
         dbc.Col(html.Div(), className = "col-3")
     ])
 ])
