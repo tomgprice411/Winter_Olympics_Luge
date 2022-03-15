@@ -27,8 +27,10 @@ def create_dot_plot(df, winner, gender, athlete):
 
     if gender == "M":
         COLOR = COLOR_PRIMARY
+        TITLE = "Men"
     elif gender == "F":
         COLOR = COLOR_SECONDARY
+        TITLE = "Women"
 
     df = df.merge(df.loc[df["Name"] == winner, ["Interval", "Time (s)"]].rename(columns = {"Time (s)": "Winning Time"}), on =["Interval"])
     df["Variance"] = df["Winning Time"] - df["Time (s)"]
@@ -86,27 +88,6 @@ def create_dot_plot(df, winner, gender, athlete):
                         yaxis = dict(visible = False),
                         xaxis = dict(range = [0,55], tickvals = [0, 10, 20, 30, 40, 50]))
 
-    # fig.add_annotation(text = "Winner: {}".format(winner.title()),
-    #                     xref = "paper",
-    #                     yref = "paper",
-    #                     x = 0,
-    #                     y = 1,
-    #                     align = "left",
-    #                     xanchor = "left",
-    #                     showarrow = False,
-    #                     font = dict(color = COLOR_WINNER))
-
-
-    # fig.add_annotation(text = "Selected: {}".format(athlete.title()),
-    #                     xref = "paper",
-    #                     yref = "paper",
-    #                     x = 0,
-    #                     y = 0.92,
-    #                     align = "left",
-    #                     xanchor = "left",
-    #                     showarrow = False,
-    #                     font = dict(color = COLOR))
-
     for time, time_label, interval, variance_label in zip(df.loc[df["Name"] == athlete, "Time (s)"], df.loc[df["Name"] == athlete, "Time Label"], df.loc[df["Name"] == athlete, "Interval"], df.loc[df["Name"] == athlete, "Variance Label"]):
         fig.add_annotation(text = '{}: <span style="color:'.format(interval) + COLOR + '">{}</span> <span style="color:'.format(time_label) + COLOR_NEGATIVE + '">{}</span> vs W'.format(variance_label),
                         xref = "x",
@@ -119,7 +100,7 @@ def create_dot_plot(df, winner, gender, athlete):
                         font = dict(color = COLOR_FONT, size = FONT_SIZE-2))
 
 
-    fig.add_annotation(text = "Women's Luge Fastest Trial Performance",
+    fig.add_annotation(text = "{}'s Luge Fastest Trial Performance".format(TITLE),
                         xref = "paper",
                         yref = "paper",
                         x = 0,
