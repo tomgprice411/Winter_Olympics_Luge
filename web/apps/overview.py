@@ -2,7 +2,10 @@ from dash import html
 from dash import dcc
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
+from dash.dependencies import Input, Output
+
 from apps.data import df
+from apps.functions import create_dot_plot
 
 
 df_2018 = df.loc[df["Run Date"].dt.year == 2018].copy()
@@ -51,18 +54,16 @@ layout = dbc.Container([
 ])
 
 
+@app.callback([Output("female-graph", "figure"),
+                Output("male-graph", "figure")],
+                [Input("female-dropdown", "value"),
+                Input("male-dropdown", "value")])
+def create_performance_comparison_page(female_athlete, male_athlete):
 
 
-fig = go.Figure()
+    fig_female = create_dot_plot(df_2018_f_t, WINNER_F, "F", female_athlete)
+    fig_male = create_dot_plot(df_2018_m_t, WINNER_M, "M", male_athlete)
 
-for gender in df_2018_t["Gender"].unique():
-    df_plot = df_2018_t.loc[df_2018_t["Gender"] == gender].copy()
-    fig.add_trace(go.Scatter(x = df_plot["Time (s)"],
-                            y = df_plot["Gender"],
-                            mode = "markers"))
-
-fig.show()
-
-
+    return fig_female, fig_male
 
 
