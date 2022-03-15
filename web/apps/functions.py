@@ -23,16 +23,6 @@ HEIGHT_SINGLE = 350
 FONT_FAMILY = "Franklin Gothic"
 
 
-
-
-
-df = df_2018_f_t.copy()
-winner = WINNER_F
-gender = "F"
-athlete = "GOUGH Alex"
-
-
-
 def create_dot_plot(df, winner, gender, athlete):
 
     if gender == "M":
