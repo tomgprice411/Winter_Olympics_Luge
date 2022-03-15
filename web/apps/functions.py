@@ -40,35 +40,10 @@ def create_dot_plot(df, winner, gender, athlete):
     elif gender == "F":
         COLOR = COLOR_SECONDARY
 
-    fig = go.Figure()
-
-    #add in trace for the other athletes
-    fig.add_trace(go.Scatter(x = df.loc[~df["Name"].isin([athlete, winner]), "Time (s)"],
-                            y = df.loc[~df["Name"].isin([athlete, winner]), "Gender"],
-                            marker = dict(color = COLOR),
-                            opacity = 0.5,
-                            mode = "markers"))
-
-    #add in trace for the selected athlete
-    fig.add_trace(go.Scatter(x = df.loc[df["Name"] == athlete, "Time (s)"],
-                            y = df.loc[df["Name"] == athlete, "Gender"],
-                            marker = dict(color = COLOR),
-                            mode = "markers"))
-
-    #add in trace for the winning athlete
-    fig.add_trace(go.Scatter(x = df.loc[df["Name"] == winner, "Time (s)"],
-                            y = df.loc[df["Name"] == winner, "Gender"],
-                            marker = dict(color = COLOR_WINNER),
-                            mode = "markers"))
-
-    fig.update_layout(height = HEIGHT_SINGLE,
-                        width = WIDTH_SINGLE,
-                        showlegend = False,
-                        plot_bgcolor = "white",
-                        font = dict(color = COLOR_FONT, size = FONT_SIZE))
-
-    fig.show()
-
+    df = df.merge(df.loc[df["Name"] == winner, ["Interval", "Time (s)"]].rename(columns = {"Time (s)": "Winning Time"}), on =["Interval"])
+    df["Variance"] = df["Winning Time"] - df["Time (s)"]
+    df["Time Label"] = df["Time (s)"].round(3).astype(str) + "s"
+    df["Variance Label"] = [str(round(x, 3)) + "s" if x < 0 else "+" + str(round(x, 3)) + "s" for x in df["Variance"]]
 
 
     df["Color"] = COLOR_WINNER
@@ -118,40 +93,68 @@ def create_dot_plot(df, winner, gender, athlete):
                         showlegend = False,
                         plot_bgcolor = "white",
                         font = dict(color = COLOR_FONT, size = FONT_SIZE),
-                        yaxis = dict(visible = False))
+                        yaxis = dict(visible = False),
+                        xaxis = dict(range = [0,55], tickvals = [0, 10, 20, 30, 40, 50]))
 
-    fig.add_annotation(text = "Winner: {}".format(winner.title()),
-                        xref = "paper",
+    # fig.add_annotation(text = "Winner: {}".format(winner.title()),
+    #                     xref = "paper",
+    #                     yref = "paper",
+    #                     x = 0,
+    #                     y = 1,
+    #                     align = "left",
+    #                     xanchor = "left",
+    #                     showarrow = False,
+    #                     font = dict(color = COLOR_WINNER))
+
+
+    # fig.add_annotation(text = "Selected: {}".format(athlete.title()),
+    #                     xref = "paper",
+    #                     yref = "paper",
+    #                     x = 0,
+    #                     y = 0.92,
+    #                     align = "left",
+    #                     xanchor = "left",
+    #                     showarrow = False,
+    #                     font = dict(color = COLOR))
+
+    for time, time_label, interval, variance_label in zip(df.loc[df["Name"] == athlete, "Time (s)"], df.loc[df["Name"] == athlete, "Time Label"], df.loc[df["Name"] == athlete, "Interval"], df.loc[df["Name"] == athlete, "Variance Label"]):
+        fig.add_annotation(text = '{}: <span style="color:'.format(interval) + COLOR + '">{}</span> <span style="color:'.format(time_label) + COLOR_NEGATIVE + '">{}</span> vs W'.format(variance_label),
+                        xref = "x",
                         yref = "paper",
-                        x = 0,
-                        y = 1,
+                        x = time,
+                        y = 0.7,
                         align = "left",
                         xanchor = "left",
                         showarrow = False,
-                        font = dict(color = COLOR_WINNER))
+                        font = dict(color = COLOR_FONT, size = FONT_SIZE-2))
 
 
-    fig.add_annotation(text = "Selected: {}".format(athlete.title()),
+    fig.add_annotation(text = "Women's Luge Fastest Trial Performance",
                         xref = "paper",
                         yref = "paper",
                         x = 0,
-                        y = 0.92,
+                        y = 1.15,
+                        showarrow = False,
                         align = "left",
                         xanchor = "left",
-                        showarrow = False,
-                        font = dict(color = COLOR))
+                        font = dict(color = COLOR_TITLE, size = FONT_TITLE_SIZE))
 
-    for interval, time in zip(df.loc[df["Name"] == athlete, "Time (s)"], df.loc[df["Name"] == athlete, "Interval"]):
-        fig.add_annotation(text = "{}: {}".format(athlete.title()),
-                        xref = "paper",
-                        yref = "paper",
-                        x = 0,
-                        y = 0.92,
-                        align = "left",
-                        xanchor = "left",
-                        showarrow = False,
-                        font = dict(color = COLOR))
+
+    fig.add_annotation(text = '<span style="color:' + COLOR_WINNER + '">{} (W)</span> vs <span style="color:'.format(winner.title()) + COLOR + '">{}</span>'.format(athlete.title()),
+                    xref = "paper",
+                    yref = "paper",
+                    x = 0,
+                    y = 1.03,
+                    align = "left",
+                    xanchor = "left",
+                    showarrow = False,
+                    font = dict(color = COLOR_TITLE)
+                    )
+
 
 
     fig.show()
+
+
+
 
