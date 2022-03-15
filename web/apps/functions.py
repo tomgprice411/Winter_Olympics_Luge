@@ -124,7 +124,7 @@ def create_dot_plot(df, winner, gender, athlete):
 
 
 
-    fig.show()
+    return fig
 
 
 
