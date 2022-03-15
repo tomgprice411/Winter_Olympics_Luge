@@ -6,7 +6,7 @@ from dash.dependencies import Input, Output
 
 from apps.data import df
 from apps.functions import create_dot_plot
-
+from index import app
 
 df_2018 = df.loc[df["Run Date"].dt.year == 2018].copy()
 
@@ -28,7 +28,7 @@ df_2018_m_t = df_2018_m.melt(id_vars = ["Name", "Gender"], value_vars = ["Start"
 df_2018_f_t = df_2018_f.melt(id_vars = ["Name", "Gender"], value_vars = ["Start", "Interval 1", "Interval 2", "Interval 3", "Finish"],
             var_name = "Interval", value_name = "Time (s)")
 
-
+print("Hello!")
 
 
 layout = dbc.Container([
@@ -60,9 +60,11 @@ layout = dbc.Container([
                 Input("male-dropdown", "value")])
 def create_performance_comparison_page(female_athlete, male_athlete):
 
-
+    print(female_athlete)
     fig_female = create_dot_plot(df_2018_f_t, WINNER_F, "F", female_athlete)
     fig_male = create_dot_plot(df_2018_m_t, WINNER_M, "M", male_athlete)
+
+    print(fig_female)
 
     return fig_female, fig_male
 

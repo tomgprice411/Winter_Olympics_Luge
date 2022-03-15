@@ -1,6 +1,5 @@
 import plotly.graph_objects as go
 import plotly.express as px
-from apps.overview import WINNER_F
 
 
 COLOR_WINNER = "#000000"
@@ -122,7 +121,7 @@ def create_dot_plot(df, winner, gender, athlete):
                     font = dict(color = COLOR_TITLE)
                     )
 
-
+    print(fig)
 
     return fig
 

@@ -6,10 +6,11 @@ from dash.dependencies import Input, Output
 
 from apps import overview, athlete
 
+
 external_stylesheets = ["assets/1bootstrap.css", "assets/2style.css"]
 
 app = dash.Dash(__name__, external_stylesheets = external_stylesheets,
-                suppress_callback_exceptions = True,
+                #suppress_callback_exceptions = True,
                 meta_tags = [{"name": "viewport", "content": "width=device-width, initial-scale=1"}])
 
 
@@ -51,5 +52,7 @@ def create_page_content(pathname):
 if __name__ == "__main__":
     app.run_server(host = "0.0.0.0",
                     port = 5000,
-                    debug = False)
+                    debug = True)
+
+
 
