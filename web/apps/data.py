@@ -21,7 +21,6 @@ df.loc[df["Finish Time (Rk)"] < 3, "Finish Time (Rk)"] = df.loc[df["Finish Time 
 
 
 
-df.info()
 
 
 

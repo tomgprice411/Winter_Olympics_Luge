@@ -16,15 +16,15 @@ df_2018.rename(columns = {"Start Time (Rk)": "Start", "Interval 1 Time (Rk)": "I
 df_2018_m = df_2018.loc[df_2018["Gender"] == "M"].copy()
 df_2018_f = df_2018.loc[df_2018["Gender"] == "F"].copy()
 
-df_winner_m = df_2018_m.groupby("Gender").min("Finish")
-df_winner_f = df_2018_f.groupby("Gender").min("Finish")
+
+WINNER_M = df_2018_m.loc[df_2018_m["Finish"] == df_2018_m["Finish"].min(), "Name"].iloc[0]
+WINNER_F = df_2018_f.loc[df_2018_f["Finish"] == df_2018_f["Finish"].min(), "Name"].iloc[0]
 
 df_2018_m_t = df_2018_m.melt(id_vars = ["Name", "Gender"], value_vars = ["Start", "Interval 1", "Interval 2", "Interval 3", "Finish"],
             var_name = "Interval", value_name = "Time (s)")
 df_2018_f_t = df_2018_f.melt(id_vars = ["Name", "Gender"], value_vars = ["Start", "Interval 1", "Interval 2", "Interval 3", "Finish"],
             var_name = "Interval", value_name = "Time (s)")
 
-[{"label": value.title(), "value": value} for value in df_2018_f_t["Name"].unique()]
 
 
 
