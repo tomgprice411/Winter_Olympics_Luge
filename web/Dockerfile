@@ -5,11 +5,11 @@ WORKDIR /code
 COPY requirements.txt /code
 
 RUN pip install --upgrade pip
-RUN pip install -r /requirements.txt \
-    && rm -rf /root/.cache
+RUN pip install -r requirements.txt 
+    # && rm -rf /root/.cache
 
 COPY . .
 
 EXPOSE 5000
-
-CMD ["gunicorn", "index:server"]
+CMD ["python3", "index.py"]
+# CMD ["gunicorn", "index:server"]
