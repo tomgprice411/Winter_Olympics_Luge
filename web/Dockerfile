@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 5000
 CMD ["python3", "index.py"]
-# CMD ["gunicorn", "index:server"]
+# CMD gunicorn --bind 0.0.0.0:5000 --workers=3 --threads=3 index:server
