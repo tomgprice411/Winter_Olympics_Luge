@@ -121,7 +121,6 @@ def create_dot_plot(df, winner, gender, athlete):
                     font = dict(color = COLOR_TITLE)
                     )
 
-    print(fig)
 
     return fig
 
