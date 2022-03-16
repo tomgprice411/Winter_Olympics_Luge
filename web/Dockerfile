@@ -8,10 +8,8 @@ RUN pip install --upgrade pip
 RUN pip install -r /requirements.txt \
     && rm -rf /root/.cache
 
-COPY ./ ./
+COPY . .
 
-ENV ENVIRONMENT_FILE=".env"
+EXPOSE 5000
 
-EXPOSE 8082
-
-ENTRYPOINT ["gunicorn", "--config", "gunicorn_config.py", "index:server"]
+CMD ["gunicorn", "index:server"]
